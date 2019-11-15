@@ -1,7 +1,7 @@
 //Array of objects of all cards' characters
 
 
-const cardsArray = [
+const CARDS = [
   {
     name: 'shell',
     img: 'IMG/shell.png'
@@ -52,13 +52,6 @@ const cardsArray = [
   }
 ];
 
-// Duplicate array to create a match for each card
-let gameGrid = cardsArray.concat(cardsArray);
-
-/* DON'T UNDERSTAND THIS SORT FUNCTION OR HOW IT WORKS*/
-// Randomize game grid on each load
-gameGrid.sort(()=> 0.5 - Math.random());
-
 
 let firstGuess = '';
 let secondGuess = '';
@@ -66,12 +59,13 @@ let count = 0;
 let previousTarget = null; // Assigned this variable to null because it doesn't currently have a value, but it will
 let delay = 1200;
 let bad_guesses = 0;
-let game_level = 0;
+let game_level = 1;
+let n_cards = 0;
 
 //Grab the div with the root ID
 const game = document.getElementById('game');
 
-reset_board()
+reset_board(CARDS.slice(0, game_level))
 
 // Function to loop through all selected elements when called, then add the match class
 const match = () => {
@@ -80,9 +74,14 @@ const match = () => {
     card.classList.add('match');
   });
   let matched = document.querySelectorAll('.match');
-  if (matched.length === gameGrid.length) {
-    alert(`YOU WIN! Bad Guesses: ${bad_guesses}`);
-    reset_board();
+  if (matched.length === n_cards) {
+    alert(`LEVEL ${game_level} COMPLETE! Bad Guesses: ${bad_guesses}`);
+    game_level++;
+    if (game_level < CARDS.length) {
+      reset_board(CARDS.slice(0, game_level));
+    } else {
+      alert('GAME OVER! YOU WIN!')
+    }
   }
 }
 
@@ -145,8 +144,14 @@ game.addEventListener('click',function (event) {
   }
 });
 
-function reset_board() {
-  // Re-randomize grid and reset
+function reset_board(cardsArray) {
+
+  // Duplicate array to create a match for each card
+  let gameGrid = cardsArray.concat(cardsArray);
+  n_cards = gameGrid.length;
+
+  /* DON'T UNDERSTAND THIS SORT FUNCTION OR HOW IT WORKS*/
+  // Randomize game grid on each load
   gameGrid.sort(()=> 0.5 - Math.random());
   firstGuess = '';
   secondGuess = '';
