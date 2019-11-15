@@ -6,7 +6,7 @@
 
 body {
   margin: 20px 0;
-  background: #6589f9;
+  background: #6589F9;
 }
 
 #grid {
@@ -19,7 +19,7 @@ body {
 
 .card {
   position: relative;
-  transition: all 0.4s linear;
+  transition: all .4s linear;
   transform-style: preserve-3d;
   margin: 5px;
 }
@@ -38,12 +38,13 @@ body {
 }
 
 .front {
-  background: #fab942 url('IMG/question_mark.png') no-repeat center center / contain;
+  z-index: 2;
+  background: #FAB942 url('IMG/question_mark.png') no-repeat center center / contain;
 }
 
 .back {
   transform: rotateY(180deg);
-  background-color: white;
+  background-color: #6589F9;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
@@ -54,5 +55,5 @@ body {
 }
 
 .match .front {
-  background: white !important;
+  background: #6589F9 !important;
 }
